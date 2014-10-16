@@ -1,0 +1,232 @@
+﻿<UserControl x:Class="EQATEC.Tracer.Views.InstrumentorControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Tracer="clr-namespace:EQATEC.Tracer"
+    xmlns:Converters="clr-namespace:EQATEC.Tracer.Converters">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <Converters:AssemblyItemConverter x:Key="treeItemConverter"/>
+      <Style x:Key="TreeItemStyle" TargetType="{x:Type Panel}">
+        <Style.Triggers>
+          <Trigger Property="IsMouseOver" Value="True">
+            <Setter Property="Background" Value="LightBlue"/>
+          </Trigger>
+        </Style.Triggers>
+      </Style>
+      <HierarchicalDataTemplate x:Key="MemberTemplate">
+        <ContentPresenter Content="{Binding Path=., Converter={StaticResource treeItemConverter}}">
+        </ContentPresenter>
+      </HierarchicalDataTemplate>
+      <HierarchicalDataTemplate x:Key="TypeTemplate"
+      ItemsSource="{Binding SortedMembers}"
+      ItemTemplate="{StaticResource MemberTemplate}">
+        <ContentPresenter Content="{Binding Path=., Converter={StaticResource treeItemConverter}}">
+        </ContentPresenter>
+      </HierarchicalDataTemplate>
+      <HierarchicalDataTemplate x:Key="NamepaceTemplate"
+      ItemsSource="{Binding SortedTypes}"
+      ItemTemplate="{StaticResource TypeTemplate}">
+        <ContentPresenter Content="{Binding Path=., Converter={StaticResource treeItemConverter}}">
+        </ContentPresenter>
+      </HierarchicalDataTemplate>
+      <HierarchicalDataTemplate x:Key="ModuleTemplate"
+        ItemsSource="{Binding SortedNamespaces}"
+        ItemTemplate="{StaticResource NamepaceTemplate}">
+        <ContentPresenter Content="{Binding Path=., Converter={StaticResource treeItemConverter}}">
+        </ContentPresenter>
+      </HierarchicalDataTemplate>
+      <HierarchicalDataTemplate x:Key="AssemblyTemplate"
+        ItemsSource="{Binding AssemblyList}"
+        ItemTemplate="{StaticResource ModuleTemplate}">
+        <ContentPresenter Content="{Binding Path=., Converter={StaticResource treeItemConverter}}">
+        </ContentPresenter>
+      </HierarchicalDataTemplate>
+    </ResourceDictionary>
+  </UserControl.Resources>
+  <Grid 
+    Drop="OnFileDrop"
+    Style="{StaticResource PanelStyle}" 
+    AllowDrop="True" Background="{DynamicResource BackgroundColor}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" MinWidth="270">
+      </ColumnDefinition>
+      <ColumnDefinition Width="100">
+      </ColumnDefinition>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto">
+      </RowDefinition>
+      <RowDefinition Height="Auto">
+      </RowDefinition>
+      <RowDefinition Height="*" MinHeight="140">
+      </RowDefinition>
+      <RowDefinition  Height="Auto">
+      </RowDefinition>
+      <RowDefinition  Height="*" MinHeight="120">
+      </RowDefinition>
+      <RowDefinition Height="Auto">
+      </RowDefinition>
+    </Grid.RowDefinitions>
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <Image Height="48" Margin="6,6,6,6" Source="/EQATECTracerMain;component/Resources/component_green.png"></Image>
+      <TextBlock 
+        VerticalAlignment="Center"
+        Style="{StaticResource WindowHeading}">Select target application</TextBlock>
+    </StackPanel>
+    <TextBox 
+      PreviewDragEnter="m_tbPath_PreviewDragEnter"
+      PreviewDragOver="m_tbPath_PreviewDragEnter"
+      Style="{StaticResource TextBoxStyle}"
+      Grid.Row="1" 
+      Grid.Column="0"      
+      Height="23"      
+      TextChanged="m_tbPath_TextChanged"
+      Name="m_tbPath" 
+      Margin="10,5,0,5"
+      HorizontalAlignment="Stretch"
+      Keyboard.KeyDown="m_tbPath_KeyDown"/>
+    <Button 
+      Style="{StaticResource ButtonStyle}"
+      Grid.Row="1" 
+      Width="75" 
+      Grid.Column="1" 
+      Height="23" 
+      Margin="10,5,10,5"
+      Name="m_btInput" 
+      Click="m_btInput_Click"
+      HorizontalAlignment="right"
+      VerticalAlignment="Bottom">
+      <Image Source="/EQATECTracerMain;component/Resources/folder.png"></Image>
+    </Button>
+    <Grid
+      Grid.Column="0"
+      Grid.ColumnSpan="2"
+      VerticalAlignment="Stretch"
+      Grid.Row="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition/>        
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"></RowDefinition>
+        <RowDefinition Height="*"></RowDefinition>
+        <RowDefinition Height="Auto"></RowDefinition>
+      </Grid.RowDefinitions>
+      <TextBlock 
+        VerticalAlignment="Center"         
+        Margin="10,0,10,0"        
+        Style="{StaticResource ContentText}" 
+        Height="16.203">Assembly List (Drop your application folder here..)</TextBlock>
+      <ListBox 
+        Name="m_tvTypeView"             
+        Style="{StaticResource ListBoxStyle}"
+        Grid.Row="1"   
+          Margin="10,0,10,0"
+          Background="{StaticResource SecondaryBackgroundColor}"
+          ItemsSource="{Binding AssemblyList}"
+          ItemTemplate="{StaticResource AssemblyTemplate}" Grid.ColumnSpan="2">
+        <ListBox.ItemContainerStyle>
+          <Style TargetType="ListBoxItem">
+            <EventSetter
+              Event="MouseRightButtonDown"
+              Handler="TreeViewItem_MouseRightButtonDown"/>
+          </Style>
+        </ListBox.ItemContainerStyle>
+      </ListBox>
+      <StackPanel Orientation="Horizontal" Grid.Row="2">
+      <TextBlock Name="m_tbUncheckAll" Margin="10,0,0,0" MouseUp="m_tbUncheckAll_MouseUp" Cursor="Hand" Foreground="#FF195AA7">Uncheck all</TextBlock>
+      <TextBlock Margin="5,0,0,0" Cursor="Hand">/</TextBlock>
+      <TextBlock Name="m_tbCheckAll" Margin="5,0,0,0" MouseUp="m_tbCheckAll_MouseUp" Cursor="Hand" Foreground="#FF195AA7">Check all</TextBlock>
+      </StackPanel>
+    </Grid>
+    <Grid
+      Grid.Row="3" Grid.ColumnSpan="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Image         
+        Grid.RowSpan="2"
+        Height="48" 
+        Margin="6,6,6,6" Source="/EQATECTracerMain;component/Resources/component_view.png"></Image>
+      <Grid
+        Margin="10,0,0,0"
+        Grid.Column="1">
+        <Grid.RowDefinitions>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <CheckBox 
+          Grid.Row="1" 
+          x:Name="m_cbTraceProperties" 
+          Click="m_cbTraceProperties_Clicked"
+          FontSize="13"
+          VerticalAlignment="Center" Content="Trace properties. (If checked get set accessors of properties will be traced)"/>
+        <CheckBox 
+          Name="m_cbTraceToFile" 
+          Click="m_cbTraceToFile_Clicked"
+          FontSize="13"
+          VerticalAlignment="Center" 
+          Grid.Row="2">Trace to file. (Warning!! when checked all trace is by default enabled.)</CheckBox>
+      </Grid>
+      <TextBlock
+        Grid.Column="0"
+        Grid.ColumnSpan="2"
+        Grid.Row="3"
+        VerticalAlignment="Bottom"
+        HorizontalAlignment="Left"
+        Margin="10,6,10,6"
+        Style="{StaticResource ContentText}">Instrumentation messages</TextBlock>
+    </Grid>
+    <ListBox 
+        Name = "m_tbMessages"
+        Margin="10,2,10,2"
+        Style="{StaticResource ListBoxStyle}"
+        VerticalAlignment="Stretch"
+        Grid.Row="4" 
+        Foreground ="{StaticResource WindowTextColor}"
+        Background ="{StaticResource SecondaryBackgroundColor}"
+        Grid.ColumnSpan="2" />
+    <StackPanel
+      Orientation="Horizontal"
+      Grid.Column="0" 
+      Grid.ColumnSpan="2"
+      HorizontalAlignment="Center"
+      Grid.Row="5" >
+      <Button 
+      Style="{StaticResource ButtonStyle}"      
+      Height="35" 
+      Name="m_btIntrument" 
+      VerticalAlignment="Center"
+      HorizontalAlignment="Left"
+      Width="75"
+      Click="m_btIntrument_Click" Background="{DynamicResource ButtonColor}">
+        <Image Source="/EQATECTracerMain;component/Resources/component_edit.png"></Image>
+        <Button.ToolTip>
+          <TextBlock ToolTipService.ShowOnDisabled="True">Instrument currently selected assemblies
+          </TextBlock>
+        </Button.ToolTip>
+      </Button>
+      <Button 
+      Style="{StaticResource ButtonStyle}"      
+      Height="35" 
+      Name="m_btRun" 
+      VerticalAlignment="Center"
+      HorizontalAlignment="Left"
+      Width="75"
+      Click="m_btRun_Click">
+        <Image Source="/EQATECTracerMain;component/Resources/flash.png"></Image>
+        <Button.ToolTip>
+          <TextBlock ToolTipService.ShowOnDisabled="True">Run instrumented application
+          </TextBlock>
+        </Button.ToolTip>
+      </Button>
+    </StackPanel>
+  </Grid>
+</UserControl>

@@ -1,0 +1,27 @@
+<Window x:Class="EQATEC.Tracer.Windows.AboutBoxWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="AboutBoxWindow"
+    Height="283" 
+    Width="435" 
+    WindowStartupLocation="CenterOwner"
+    MaxHeight="283"
+    MinHeight="283"
+    MaxWidth="435"
+    MinWidth="435"
+    WindowStyle="None">
+    <Window.Resources>
+    </Window.Resources>
+    <Canvas>
+        <Image MouseDown="Image_MouseDown" Source="/EQATECTracerMain;component/Resources/EQATECTracer_AboutBox.png" Margin="0,0,0,0">
+        </Image>
+        <TextBlock Name="m_txtApplicationName" Text="EQATEC Tracer" Style="{StaticResource ContentText}" Canvas.Left="131" Foreground="Black" FontSize="24" FontWeight="Bold" Canvas.Top="9" />
+        <TextBlock Name="m_txtVersion" Text="Version 1.0.0" Style="{StaticResource ContentText}" Canvas.Left="131" Foreground="Black" Canvas.Top="49" />
+        <TextBlock Name="m_txtCompany" Text="Developed by EQATEC A/S" Style="{StaticResource ContentText}" Canvas.Left="131" Foreground="Black" Canvas.Top="69" />
+        <TextBlock Name="m_txtCopyright" Text="Copyright © EQATEC 2008" Style="{StaticResource ContentText}" Canvas.Left="131" Foreground="Black" Canvas.Top="89" />
+        <TextBlock Name="m_txtDescription" Text="Findt us at http://www.eqatec.com" Style="{StaticResource ContentText}" Canvas.Left="131" Foreground="Black" FontSize="11" Canvas.Top="119" />
+        <TextBlock Name="m_txtDescription2" Text="Contact us at tools@eqatec.com" Style="{StaticResource ContentText}" Canvas.Left="131" Foreground="Black" Canvas.Top="135" FontSize="11" />
+        <TextBlock Name="m_txtDescription3" Text="or at http://www.eqatec.com/forum/tracer" Style="{StaticResource ContentText}" Canvas.Left="131" Foreground="Black" Canvas.Top="151" FontSize="11" />
+        <TextBlock Name="m_txtLicenseLink" Text="Click to view license agreement" Style="{StaticResource ContentText}" Canvas.Left="131" Foreground="Black" FontSize="9" Cursor="Hand" MouseUp="m_txtLicenseLink_MouseUp" Canvas.Top="182" />
+    </Canvas>
+</Window>

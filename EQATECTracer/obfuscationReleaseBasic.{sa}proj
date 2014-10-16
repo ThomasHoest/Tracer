@@ -1,0 +1,55 @@
+<SmartAssemblyProject ProjectID="{102ad337-fc2b-48ef-a7de-eb2f293a4f82}" Version="2.0">
+    <MainAssemblyFileName>.\bin\ReleaseBasic\EQATECTracer.dll</MainAssemblyFileName>
+    <Configuration Name="ReleaseBasic">
+        <ApplicationName />
+        <Destination DestinationFileName=".\bin\ReleaseBasic\SmartAssemblyOutput\EQATECTracer.dll" />
+        <Assemblies>
+            <Assembly AssemblyName="Mono.Cecil, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+                <Merging Merge="1">
+                    <Pruning />
+                    <Obfuscation Obfuscate="1">
+                        <Exclusion />
+                    </Obfuscation>
+                    <ControlFlow Obfuscate="1" ObfuscationLevel="3" />
+                    <ResourcesCompression />
+                </Merging>
+                <Embedding />
+            </Assembly>
+            <Assembly AssemblyName="EQATECSigningUtilities, Culture=neutral, PublicKeyToken=39c207b9c503038b">
+                <Merging />
+                <Embedding />
+            </Assembly>
+            <Assembly AssemblyName="CecilToolBox, Culture=neutral, PublicKeyToken=39c207b9c503038b">
+                <Merging Merge="1">
+                    <Pruning />
+                    <Obfuscation Obfuscate="1">
+                        <Exclusion />
+                    </Obfuscation>
+                    <ControlFlow Obfuscate="1" ObfuscationLevel="3" />
+                </Merging>
+                <Embedding />
+            </Assembly>
+            <Assembly AssemblyName="EQATECTracer, Culture=neutral, PublicKeyToken=39c207b9c503038b">
+                <Merging>
+                    <ResourcesCompression />
+                    <Pruning Prune="0">
+                        <Exclusion />
+                    </Pruning>
+                    <Obfuscation Obfuscate="1">
+                        <Exclusion />
+                    </Obfuscation>
+                    <ControlFlow Obfuscate="1" ObfuscationLevel="3" />
+                </Merging>
+            </Assembly>
+        </Assemblies>
+        <Options>
+            <Obfuscation FieldsNameMangling="3" NameMangling="3" />
+            <ExceptionReporting />
+            <StrongNameSigning KeyFileName="..\eqatectools.snk" Sign="1" />
+            <OtherProtections AddIncorrectMetadata="1" SuppressIldasm="1" />
+            <StringsEncoding Encode="1" UseImprovedEncoding="1" />
+            <OtherOptimizations />
+            <Debugging />
+        </Options>
+    </Configuration>
+</SmartAssemblyProject>

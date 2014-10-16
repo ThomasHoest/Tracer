@@ -1,0 +1,87 @@
+<SmartAssemblyProject ProjectID="{5671f8b5-388a-42a5-b6cb-97099c30a790}" Version="2.0">
+  <MainAssemblyFileName>.\bin\Release\EQATECTracerViewer.exe</MainAssemblyFileName>
+  <Configuration Name="Release">
+    <ApplicationName />
+    <Destination DestinationFileName=".\bin\Release\SmartAssemblyOutput\EQATECTracerViewer.exe" />
+    <Assemblies>
+      <Assembly AssemblyName="CecilToolBox, Culture=neutral, PublicKeyToken=39c207b9c503038b">
+        <Merging Merge="1">
+          <Pruning />
+          <Obfuscation Obfuscate="1">
+            <Exclusion />
+          </Obfuscation>
+          <ControlFlow />
+          <ResourcesCompression />
+          <ResourcesPruning />
+        </Merging>
+        <Embedding />
+      </Assembly>
+      <Assembly AssemblyName="EQATECTracer, Culture=neutral, PublicKeyToken=39c207b9c503038b">
+        <Merging Merge="1">
+          <Pruning />
+          <Obfuscation Obfuscate="1">
+            <Exclusion />
+          </Obfuscation>
+          <ControlFlow />
+          <ResourcesCompression />
+          <ResourcesPruning />
+        </Merging>
+        <Embedding />
+      </Assembly>
+      <Assembly AssemblyName="EQATECTracerRuntime, Culture=neutral, PublicKeyToken=39c207b9c503038b">
+        <Merging>
+          <ResourcesCompression />
+          <Pruning />
+          <Obfuscation Obfuscate="1">
+            <Exclusion />
+          </Obfuscation>
+          <ControlFlow />
+          <ResourcesPruning />
+        </Merging>
+      </Assembly>
+      <Assembly AssemblyName="EQATECSigningUtilities, Culture=neutral, PublicKeyToken=39c207b9c503038b">
+        <Merging Merge="1">
+          <Pruning />
+          <Obfuscation Obfuscate="1">
+            <Exclusion />
+          </Obfuscation>
+          <ControlFlow />
+          <ResourcesCompression />
+          <ResourcesPruning />
+        </Merging>
+        <Embedding />
+      </Assembly>
+      <Assembly AssemblyName="EQATECVersionCheckUtilities, Culture=neutral, PublicKeyToken=39c207b9c503038b">
+        <Merging Merge="1">
+          <Pruning />
+          <Obfuscation Obfuscate="1">
+            <Exclusion />
+          </Obfuscation>
+          <ControlFlow />
+          <ResourcesCompression />
+          <ResourcesPruning />
+        </Merging>
+        <Embedding />
+      </Assembly>
+      <Assembly AssemblyName="Mono.Cecil, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+        <Merging Merge="1">
+          <Pruning />
+          <Obfuscation Obfuscate="1">
+            <Exclusion />
+          </Obfuscation>
+          <ControlFlow />
+        </Merging>
+        <Embedding />
+      </Assembly>
+    </Assemblies>
+    <Options>
+      <Obfuscation FieldsNameMangling="2" NameMangling="2" />
+      <ExceptionReporting ReportExceptions="0" />
+      <StrongNameSigning KeyFileName="..\eqatectools.snk" Sign="1" />
+      <OtherProtections />
+      <StringsEncoding Encode="0" />
+      <OtherOptimizations />
+      <Debugging CreatePDB="0" />
+    </Options>
+  </Configuration>
+</SmartAssemblyProject>

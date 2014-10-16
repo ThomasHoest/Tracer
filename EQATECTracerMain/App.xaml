@@ -1,0 +1,22 @@
+﻿<Application x:Class="EQATECTracerMain.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    StartupUri="Windows/TracerMain.xaml">
+    <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Templates\ApplicationColors.xaml"/>
+        <ResourceDictionary Source="Templates\ScrollViewerTemplate.xaml"/>
+        <ResourceDictionary Source="Templates\ButtonTemplate.xaml"/>
+        <ResourceDictionary Source="Templates\CheckboxTemplate.xaml"/>
+        <ResourceDictionary Source="Templates\ToolbarTemplate.xaml"/>
+        <ResourceDictionary Source="Templates\MiscStyles.xaml"/>
+        <ResourceDictionary Source="Templates\ExpanderTemplate.xaml"/>
+        <ResourceDictionary Source="Templates\TabcontrolTemplate.xaml"/>
+        <ResourceDictionary Source="Templates\SliderTemplate.xaml"/>
+        <ResourceDictionary Source="Templates\ToggleButtonTemplate.xaml"/>
+        <ResourceDictionary Source="Templates\ComboBoxTemplate.xaml"/>
+      </ResourceDictionary.MergedDictionaries>     
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>

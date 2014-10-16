@@ -1,0 +1,36 @@
+﻿<Window x:Class="EQATEC.Tracer.TracerInstrumentor.SelectExecutable"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lib="clr-namespace:EQATEC.Tracer.TracerInstrumentor" 
+    Title="SelectExecutable" Height="200" Width="300" ResizeMode="CanResize" WindowStyle="ToolWindow">
+  <Window.Resources>
+    <lib:ExecutableConverter x:Key="executableConverter"/>
+    <DataTemplate x:Key="ExecutableTemplate">
+      <ContentPresenter Content="{Binding Path=Self, Converter={StaticResource executableConverter}}">
+      </ContentPresenter>
+    </DataTemplate>
+  </Window.Resources>
+  <Grid Background="{StaticResource BackgroundColor}">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"></RowDefinition>
+        <RowDefinition></RowDefinition>
+        <RowDefinition Height="Auto"></RowDefinition>
+      </Grid.RowDefinitions>
+    <TextBlock 
+      Style="{StaticResource ContentText}"
+      HorizontalAlignment="Center"
+      Grid.Row="0">Please select executable</TextBlock>
+    <ListBox 
+      Background="{StaticResource SecondaryBackgroundColor}"
+      ItemsSource="{Binding}"
+      ItemTemplate="{StaticResource ExecutableTemplate}"
+      Name="m_lbExecutables"
+      Grid.Row="1"/>
+    <Button
+      Name="m_btCancel"
+      Click="m_btCancel_Click"
+      Style="{StaticResource ButtonStyle}"
+      Height="35" 
+      Grid.Row="2">Cancel</Button>
+  </Grid>
+</Window>

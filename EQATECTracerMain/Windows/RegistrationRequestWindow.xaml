@@ -1,0 +1,68 @@
+<Window x:Class="EQATEC.Tracer.Windows.RegistrationRequestWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Tracer="clr-namespace:EQATEC.Tracer"
+    xmlns:Converters="clr-namespace:EQATEC.Tracer.Converters" 
+    WindowStartupLocation="CenterOwner"
+    Title="Register for the full version"
+    Height="323" Width="433" Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary>           
+            <Converters:ExecutableConverter x:Key="executableConverter"/>
+            <DataTemplate x:Key="ExecutableTemplate">
+                <ContentPresenter Content="{Binding Path=., Converter={StaticResource executableConverter}}">
+                </ContentPresenter>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="{StaticResource BackgroundColor}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="128" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Image Name="image1" Stretch="Fill" Source="/EQATECTracerMain;component/Resources/please-register.png" Margin="0,3,0,0" Height="127" VerticalAlignment="Top" />
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <RichTextBox Background="White" Padding="0,0,0,0">
+                <FlowDocument>
+                    <Paragraph FontSize="14">
+                        <Bold>Do you like this tool?</Bold>
+                    </Paragraph>
+                    <Paragraph>
+                        We are very interested in knowing how many of you find our tools usefull. 
+                        The more interest the more development effort we will dedicate to it.
+                    </Paragraph>
+                    <Paragraph>
+                        You can help us by registering for the full version of this tool. It is
+                        <Bold>still completely free</Bold> and it only takes an email address to
+                        register. The full version has:
+                    </Paragraph>
+                    <Paragraph>
+                        <BulletDecorator>
+                            <BulletDecorator.Bullet>
+                                <Image Width="8" Height="8" Source="/EQATECTracerMain;component/Resources/bullet_point.png"/></BulletDecorator.Bullet>
+                            <TextBlock>No registration form like this</TextBlock>
+                        </BulletDecorator>
+                        <LineBreak />
+                        <BulletDecorator>
+                            <BulletDecorator.Bullet>
+                                <Image Width="8" Height="8" Source="/EQATECTracerMain;component/Resources/bullet_point.png"/>
+                            </BulletDecorator.Bullet>
+                            <TextBlock>No limit on trace time</TextBlock>
+                        </BulletDecorator>
+                    </Paragraph>
+                    <Paragraph>
+                        <Hyperlink Name="m_linkToFullVersion" Cursor="Hand" Click="m_linkToFullVersion_Click">Yes, take me to the full version</Hyperlink>
+                    </Paragraph>
+                    <Paragraph>
+                        Best regards, the EQATEC Tools team
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+            <Button Name="m_btOK" Click="m_btOK_Click" Style="{StaticResource ButtonStyle}" Grid.Row="1" HorizontalAlignment="Right" Margin="0,4,11,4" Width="109">OK</Button>
+        </Grid>
+    </Grid>
+</Window>

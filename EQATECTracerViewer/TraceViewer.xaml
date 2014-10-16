@@ -1,0 +1,262 @@
+﻿<Window x:Class="EQATEC.Tracer.TracerViewer.ViewerMain"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:diagnostics="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+    xmlns:lib="clr-namespace:EQATEC.Tracer.TracerViewer"
+    xmlns:lib2="clr-namespace:EQATEC.Tracer.Viewer;assembly=EQATECTracer" 
+    Title="TraceViewer" SizeChanged="Window_SizeChanged" Height="600" Width="580" Closing="Window_Closing">
+  <Window.Resources>
+    <lib:TreeItemConverter x:Key="treeItemConverter"/>
+    <lib:TraceItemConverter x:Key="traceItemConverter"/>    
+    <Style x:Key="HeaderText" TargetType="TextBlock">
+      <Setter Property="Control.FontSize" Value="10pt"/>
+      <Setter Property="Control.FontWeight" Value="Bold" />
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="HorizontalAlignment" Value="Center"/>
+      <Setter Property="Foreground" Value="Blue"/>
+      <Setter Property="Padding" Value="2"/>
+    </Style>
+    <Style x:Key="TreeItemStyle" TargetType="{x:Type Panel}">
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Background" Value="LightBlue"/>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+    <Style x:Key="ToolbarButtonStyle" TargetType="Button">
+      <Setter Property="Height" Value="27" />
+      <Setter Property="Margin" Value="1,0,1,0" />
+    </Style>
+    <Style TargetType="{x:Type Image}" x:Key="toolbarImageStyle">
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}, AncestorLevel=1}, Path=IsEnabled}" Value="False">
+          <Setter Property="Opacity" Value="0.50"></Setter>
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
+    <DataTemplate DataType="{x:Type lib:LineHolderProxy}">      
+      <ContentPresenter Content="{Binding Path = Self, Converter={StaticResource traceItemConverter}}"/>
+    </DataTemplate>
+    <HierarchicalDataTemplate x:Key="MemberTemplate">
+      <ContentPresenter Content="{Binding Path=Self, Converter={StaticResource treeItemConverter}}">
+      </ContentPresenter>        
+    </HierarchicalDataTemplate>
+    <HierarchicalDataTemplate x:Key="TypeTemplate"
+      ItemsSource="{Binding Members}"
+      ItemTemplate="{StaticResource MemberTemplate}">
+      <ContentPresenter Content="{Binding Path=Self, Converter={StaticResource treeItemConverter}}">
+      </ContentPresenter>      
+    </HierarchicalDataTemplate>
+    <HierarchicalDataTemplate x:Key="NamepaceTemplate"
+      ItemsSource="{Binding Types}"
+      ItemTemplate="{StaticResource TypeTemplate}">
+      <ContentPresenter Content="{Binding Path=Self, Converter={StaticResource treeItemConverter}}">
+      </ContentPresenter>
+    </HierarchicalDataTemplate>
+    <HierarchicalDataTemplate x:Key="ModuleTemplate"
+      ItemsSource="{Binding Namespaces}"
+      ItemTemplate="{StaticResource NamepaceTemplate}">
+      <ContentPresenter Content="{Binding Path=Self, Converter={StaticResource treeItemConverter}}">
+      </ContentPresenter>
+    </HierarchicalDataTemplate>
+    <HierarchicalDataTemplate x:Key="AssemblyTemplate"
+      ItemsSource="{Binding Modules}"
+      ItemTemplate="{StaticResource ModuleTemplate}">
+      <DockPanel>
+        <Ellipse Width="7" Height="7"  Fill="Black" DockPanel.Dock="Left"/>
+        <TextBlock Margin="2,0,0,0" VerticalAlignment="Center" 
+                   DockPanel.Dock="Right" Text="{Binding Path=AssemblyName}"/>
+      </DockPanel>
+    </HierarchicalDataTemplate>
+  </Window.Resources>
+    <Grid 
+      Style="{StaticResource PanelStyle}"
+      Name="m_grMainPanel">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition >              
+        </ColumnDefinition>        
+        <ColumnDefinition Width="Auto">
+        </ColumnDefinition>
+      <ColumnDefinition>
+        </ColumnDefinition>
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto">
+        </RowDefinition>
+        <RowDefinition Height="Auto">              
+        </RowDefinition>
+        <RowDefinition Height="*">
+        </RowDefinition>
+        <RowDefinition Height="Auto">
+        </RowDefinition>
+        <RowDefinition Height="Auto">
+        </RowDefinition>
+    </Grid.RowDefinitions>
+    <GridSplitter 
+      Grid.Column="1" 
+      Grid.RowSpan="6"
+      VerticalAlignment="Stretch"
+      HorizontalAlignment="Stretch"
+      ShowsPreview="true"
+      Width="2"      
+      ></GridSplitter>
+      <GridSplitter 
+        Grid.Row="3"
+        Grid.Column="2"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Top"
+        ResizeBehavior="PreviousAndNext"
+        Height="2"
+        ShowsPreview="true"
+        ResizeDirection="Rows"/>
+    <StackPanel 
+      HorizontalAlignment="Center"
+      Orientation="Horizontal">
+      <Image Height="40" Source="/EQATECTracerViewer;component/Resources/element_preferences.png"></Image>
+      <TextBlock 
+        Height="23" 
+        Name="textBox1" 
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center" 
+        Style="{StaticResource WindowHeading}">Control Tree</TextBlock>
+    </StackPanel>
+    <StackPanel 
+      HorizontalAlignment="Center"
+      Grid.Column="2" 
+      Orientation="Horizontal">
+      <Image Height="40" Source="/EQATECTracerViewer;component/Resources/gear_view.png"></Image>
+      <TextBlock         
+        Name="textBox2" 
+        VerticalAlignment="Center"
+        HorizontalAlignment="Center"         
+        Style="{StaticResource WindowHeading}">Trace Viewer</TextBlock>
+    </StackPanel>
+    <ToolBar 
+      Background ="{StaticResource ButtonColor}"
+      BorderBrush="{StaticResource SecondaryBackgroundColor}"
+      BorderThickness="2"
+      Grid.Column="0" 
+      Grid.Row="1" 
+      Height="45" 
+      Name="toolBar1" 
+      Margin="5,5,5,5">
+      <Button 
+        Style="{StaticResource ToolbarButtonStyle}"
+        Click="m_btUndo_Click"        
+        Name="m_btUndo">
+        <Image Style="{StaticResource toolbarImageStyle}" Source="/EQATECTracerViewer;component/Resources/undo.png">          
+        </Image>
+      </Button>
+      <Button 
+        Style="{StaticResource ToolbarButtonStyle}"
+        Click="m_btRedo_Click"
+        Name="m_btRedo">
+        <Image Style="{StaticResource toolbarImageStyle}" Source="/EQATECTracerViewer;component/Resources/redo.png"></Image>
+      </Button>
+      <Button 
+        Style="{StaticResource ToolbarButtonStyle}"
+        Click="m_btClearAll_Click"
+        Name="m_btClearAll">  
+        <Image Style="{StaticResource toolbarImageStyle}" Source="/EQATECTracerViewer;component/Resources/delete2.png"></Image>
+      </Button>
+      <Separator/>
+      <TextBox 
+        Margin="2,0,2,0"
+        Height="23" 
+        Name="m_btIP" 
+        Width="65"  
+        BorderBrush="Black"
+        >LocalHost</TextBox>
+      <Button 
+        Style="{StaticResource ToolbarButtonStyle}"
+        Name="m_btConnect"
+        Click="m_btConnect_Click">
+        <Image Style="{StaticResource toolbarImageStyle}" Source="/EQATECTracerViewer;component/Resources/plug.png"></Image>
+      </Button>
+      <Button 
+        Style="{StaticResource ToolbarButtonStyle}"
+        Click="m_btDisconnect_Click"
+        Name="m_btDisconnect">         
+        <Image Style="{StaticResource toolbarImageStyle}" Source="/EQATECTracerViewer;component/Resources/plug_new.png"></Image>
+      </Button>
+    </ToolBar>
+    <ToolBar      
+      Grid.Column="2" 
+      Grid.Row="1" 
+      Background ="{StaticResource ButtonColor}"
+      BorderBrush="{StaticResource SecondaryBackgroundColor}"
+      BorderThickness="2"
+      Height="45" 
+      Name="toolBar2" 
+      Margin="5,5,5,5">
+      <Button 
+        Style="{StaticResource ToolbarButtonStyle}"
+        Click="m_btClear_Click"
+        Name="m_btClear">
+        <Image Source="/EQATECTracerViewer;component/Resources/document_plain_new.png"></Image>
+      </Button>
+      <Button 
+        Style="{StaticResource ToolbarButtonStyle}"
+        Name="m_btDown">
+        <Image Source="/EQATECTracerViewer;component/Resources/arrow_down_blue.png"></Image>
+      </Button>
+      <Button 
+        Style="{StaticResource ToolbarButtonStyle}"
+        Name="m_btUp">
+        <Image Source="/EQATECTracerViewer;component/Resources/arrow_up_blue.png"></Image>
+      </Button>
+      <Button 
+        Style="{StaticResource ToolbarButtonStyle}"
+        Name="m_btSave">
+        <Image Source="/EQATECTracerViewer;component/Resources/disk_blue.png"></Image>
+      </Button>
+    </ToolBar>
+    <TreeView Name="m_tvTypeView" 
+            Margin="5,5,5,5"
+            AllowDrop="True" 
+            Style ="{StaticResource TreeViewStyle}"
+            Grid.Column="0"
+            Grid.Row="2"     
+            Grid.RowSpan="6"
+            ItemsSource="{Binding Path = ModuleList}"
+            ItemTemplate="{StaticResource ModuleTemplate}">
+            <TreeView.ItemContainerStyle>
+              <Style TargetType="TreeViewItem">
+                <EventSetter
+                  Event="TreeViewItem.MouseRightButtonDown"
+                  Handler="TreeViewItem_MouseRightButtonDown"/>
+              </Style>
+            </TreeView.ItemContainerStyle>
+          </TreeView>
+    <!--<ListBox
+      Grid.Column="2"
+      Grid.Row="2"        
+      VirtualizingStackPanel.IsVirtualizing="True"        
+      SelectionChanged="m_lbTrace_SelectionChanged"
+      Name="m_lbTrace" 
+      ItemsSource="{Binding Path = TraceData}"
+      ScrollViewer.VerticalScrollBarVisibility="Visible" 
+      HorizontalContentAlignment="Stretch"
+      IsEnabled="True" ScrollViewer.CanContentScroll="True">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <ContentPresenter Content="{Binding Path = Self, Converter={StaticResource traceItemConverter}}"/>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>-->
+    <lib:ContainerListFastBinding 
+      Margin="5,5,5,5"
+      Grid.Column="2"
+      Grid.Row="2"         
+      BorderBrush="{StaticResource BorderColor}"
+      CornerRadius="2"
+      BorderThickness="2"
+      Background="{StaticResource SecondaryBackgroundColor}"
+      OnItemSelected="m_lbTrace_OnItemSelected"
+      OnItemDoubleClick="m_lbTrace_OnItemDoubleClick"
+      x:Name="m_lbTrace"       
+      ItemsSource="{Binding Path = TraceData}"/>    
+    <lib:ParameterView Grid.Column="2" Grid.Row="5" MinHeight="100" x:Name="m_pvParameterView" VerticalAlignment="Stretch"/>
+    <TextBlock Grid.Column="2" Grid.Row="3" Height="28" Name="label1" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource ContentText}">Parameters</TextBlock>
+  </Grid>
+</Window>

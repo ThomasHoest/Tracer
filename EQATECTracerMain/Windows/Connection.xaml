@@ -1,0 +1,33 @@
+<Window x:Class="EQATEC.Tracer.Windows.Connection"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lib="clr-namespace:EQATEC.Tracer" 
+    Title="Connection" Height="130" Width="332" ResizeMode="CanResize" WindowStyle="ToolWindow">
+  <Window.Resources>
+  </Window.Resources>
+  <Grid Background="{StaticResource BackgroundColor}">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"></RowDefinition>
+        <RowDefinition></RowDefinition>
+        <RowDefinition Height="Auto"></RowDefinition>
+      </Grid.RowDefinitions>
+    <TextBlock 
+      Name="m_tbConnectionText"
+      Style="{StaticResource SecondaryWindowHeading}"
+      HorizontalAlignment="Center"
+      Grid.Row="0">Waiting for connection</TextBlock>   
+    <TextBlock 
+      Name="m_tbAddress"
+      Style="{StaticResource ContentText}"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center"
+      Grid.Row="1"></TextBlock>
+    <Button
+      Margin="8"
+      Name="m_btCancel"
+      Click="m_btCancel_Click"
+      Style="{StaticResource ButtonStyle}"
+      Height="35" 
+      Grid.Row="2">Cancel</Button>
+  </Grid>
+</Window>

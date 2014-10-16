@@ -1,0 +1,18 @@
+﻿<Window x:Class="TestApp.Window1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Window1" Height="334" Width="325">
+    <Grid>
+    <StackPanel HorizontalAlignment="Right" Name="stackPanel1" Width="300">
+      <Button Height="23" Name="m_btThread1" Click="m_btThread1_Click" Width="150">Start Thread 1</Button>
+      <Button Height="23" Name="m_btThread2" Click="m_btThread2_Click" Width="150">Start Thread 2</Button>
+      <Button Height="23" Name="m_btFunc1" Click="m_btFunc1_Click" Width="150">Call Some Function 1</Button>
+      <Button Height="23" Name="m_btFunc2" Click="m_btFunc2_Click" Width="150">Call Some Function 2</Button>
+      <Button Height="23" Name="m_btUException" Click="m_btUException_Click" Width="150">Throw unhandled ex</Button>
+      <Button Height="23" Name="m_btHException" Click="m_btHException_Click" Width="150">Throw handled ex</Button>
+      <Button Height="23" Name="m_btThreadException" Click="m_btThreadException_Click" Width="150">Thread exception</Button>
+      <ListBox Height="105" Name="m_lbMessages" Width="250" HorizontalAlignment="Center" />
+      <Button Height="23" Name="m_btStartServer" Click="m_btStartServer_Click" Width="150">Start Server</Button>
+    </StackPanel>
+  </Grid>
+</Window>
